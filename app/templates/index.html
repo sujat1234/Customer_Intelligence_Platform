@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Intelligence Platform</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Arial, sans-serif;
+
+            background:
+                radial-gradient(circle at 8% 8%, rgba(129, 140, 248, 0.20), transparent 28%),
+                radial-gradient(circle at 92% 12%, rgba(34, 211, 238, 0.18), transparent 26%),
+                radial-gradient(circle at 50% 92%, rgba(167, 139, 250, 0.16), transparent 30%),
+                linear-gradient(135deg, #eef2ff 0%, #fdf4ff 48%, #ecfeff 100%);
+
+            color: #1e293b;
+        }
+
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 45px 30px 70px;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #7c3aed,
+                    #0891b2
+                );
+
+            color: white;
+
+            padding: 42px;
+
+            border-radius: 28px;
+
+            margin-bottom: 30px;
+
+            box-shadow:
+                0 20px 45px rgba(79, 70, 229, 0.25);
+        }
+
+
+        .hero h1 {
+            margin: 0 0 10px;
+
+            font-size: 42px;
+
+            letter-spacing: -1px;
+        }
+
+
+        .hero p {
+            margin: 0;
+
+            font-size: 17px;
+
+            opacity: 0.9;
+        }
+
+
+        .hero-badge {
+            display: inline-block;
+
+            margin-top: 22px;
+
+            padding: 8px 15px;
+
+            border-radius: 30px;
+
+            background: rgba(255, 255, 255, 0.18);
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           SECTION HEADINGS
+        ========================= */
+
+        h2 {
+            font-size: 26px;
+
+            margin: 38px 0 20px;
+
+            color: #172554;
+            position: relative;
+        }
+
+        h2::after {
+            content: "";
+            display: block;
+            width: 55px;
+            height: 4px;
+            margin-top: 8px;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #6366f1, #a855f7, #06b6d4);
+        }
+
+
+        /* =========================
+           COMMON CARD
+        ========================= */
+
+        .card,
+        .search-section,
+        .chart-card,
+        .table-section,
+        .rfm-card,
+        .segment-card {
+
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(248, 250, 252, 0.94));
+
+            border: 1px solid rgba(148, 163, 184, 0.18);
+
+            box-shadow:
+                0 10px 30px rgba(30, 41, 59, 0.07);
+
+            border-radius: 20px;
+        }
+
+
+        /* =========================
+           FILTER
+        ========================= */
+
+        .filter-card {
+            padding: 25px 28px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            border-left: 5px solid #6366f1;
+        }
+
+
+        .filter-title {
+            margin: 0 0 5px;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            color: #312e81;
+        }
+
+
+        .filter-description {
+            margin: 0;
+
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+
+        .search-form {
+            display: flex;
+
+            gap: 12px;
+        }
+
+
+        .search-input {
+            min-width: 260px;
+
+            padding: 13px 16px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+
+            background: white;
+
+            color: #1e293b;
+
+            outline: none;
+        }
+
+
+        .search-input:focus {
+            border-color: #6366f1;
+
+            box-shadow:
+                0 0 0 3px rgba(99, 102, 241, 0.12);
+        }
+
+
+        /* =========================
+           SELECTED SEGMENT
+        ========================= */
+
+        .selected-section {
+            margin-top: 20px;
+
+            padding: 20px 25px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #eef2ff,
+                    #f5f3ff
+                );
+
+            border: 1px solid #c7d2fe;
+        }
+
+
+        .selected-section p {
+            margin: 0;
+
+            color: #475569;
+        }
+
+
+        .selected-section strong {
+            color: #4f46e5;
+
+            font-size: 18px;
+        }
+
+
+        /* =========================
+           KPI CARDS
+        ========================= */
+
+        .metrics {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+
+            margin-top: 28px;
+        }
+
+
+        .card {
+            padding: 25px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 70px;
+
+            height: 70px;
+
+            border-radius: 50%;
+
+            right: -25px;
+
+            top: -25px;
+
+            background: #e0e7ff;
+        }
+
+
+        .metrics .card:nth-child(2)::after {
+            background: #cffafe;
+        }
+
+
+        .metrics .card:nth-child(3)::after {
+            background: #ede9fe;
+        }
+
+
+        .metrics .card:nth-child(4)::after {
+            background: #ccfbf1;
+        }
+
+
+        .card-title {
+            color: #64748b;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            margin-bottom: 10px;
+        }
+
+
+        .card-value {
+            font-size: 31px;
+
+            font-weight: 800;
+
+            color: #1e1b4b;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* =========================
+           RFM
+        ========================= */
+
+        .rfm-cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .rfm-card {
+            padding: 28px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .rfm-card:nth-child(1) {
+            border-top: 5px solid #06b6d4;
+        }
+
+
+        .rfm-card:nth-child(2) {
+            border-top: 5px solid #8b5cf6;
+        }
+
+
+        .rfm-card:nth-child(3) {
+            border-top: 5px solid #f59e0b;
+        }
+
+
+        .rfm-title {
+            color: #64748b;
+
+            font-weight: 600;
+
+            font-size: 14px;
+        }
+
+
+        .rfm-value {
+            font-size: 30px;
+
+            font-weight: 800;
+
+            margin-top: 10px;
+
+            color: #1e293b;
+        }
+
+
+        .rfm-description {
+            margin-top: 9px;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           SEGMENTS
+        ========================= */
+
+        .segments {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .segment-card {
+            padding: 26px;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .segment-card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 16px 35px rgba(30, 41, 59, 0.12);
+        }
+
+
+        .segment-card:nth-child(1) {
+            border-left: 5px solid #f59e0b;
+        }
+
+
+        .segment-card:nth-child(2) {
+            border-left: 5px solid #8b5cf6;
+        }
+
+
+        .segment-card:nth-child(3) {
+            border-left: 5px solid #ef4444;
+        }
+
+
+        .segment-card:nth-child(4) {
+            border-left: 5px solid #06b6d4;
+        }
+
+
+        .segment-card:nth-child(5) {
+            border-left: 5px solid #10b981;
+        }
+
+
+        .segment-card h3 {
+            margin: 0;
+
+            font-size: 19px;
+
+            color: #334155;
+        }
+
+
+        .segment-count {
+            font-size: 38px;
+
+            font-weight: 800;
+
+            margin: 14px 0 8px;
+
+            color: #312e81;
+        }
+
+
+        .segment-description {
+            color: #64748b;
+
+            line-height: 1.5;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           CHARTS
+        ========================= */
+
+        .charts {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 22px;
+        }
+
+
+        .chart-card {
+            padding: 28px;
+        }
+
+
+        .chart-card h3 {
+            margin: 0 0 20px;
+
+            color: #334155;
+
+            font-size: 18px;
+        }
+
+
+        .chart-container {
+            height: 380px;
+        }
+
+
+        /* =========================
+           CUSTOMER SEARCH
+        ========================= */
+
+        .search-section {
+            padding: 28px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .search-section h2 {
+            margin-top: 0;
+        }
+
+
+        .search-section p {
+            color: #64748b;
+        }
+
+
+        .search-button {
+            padding: 13px 22px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #7c3aed
+                );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 7px 18px rgba(79, 70, 229, 0.22);
+
+            transition:
+                transform 0.2s ease;
+        }
+
+
+        .search-button:hover {
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           CUSTOMER PROFILE
+        ========================= */
+
+        .profile {
+            margin-top: 25px;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f5f3ff
+                );
+
+            border: 1px solid #c7d2fe;
+        }
+
+
+        .profile h3 {
+            color: #312e81;
+        }
+
+
+        .profile-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+
+        .profile-item {
+            background: white;
+
+            padding: 18px;
+
+            border-radius: 12px;
+
+            border: 1px solid #e2e8f0;
+        }
+
+
+        .profile-label {
+            color: #64748b;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .profile-value {
+            font-size: 20px;
+
+            font-weight: 700;
+
+            color: #1e293b;
+        }
+
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-section {
+            padding: 28px;
+
+            overflow-x: auto;
+        }
+
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+
+        table {
+            width: 100%;
+
+            border-collapse: separate;
+
+            border-spacing: 0;
+
+            margin-top: 20px;
+
+            overflow: hidden;
+
+            border-radius: 12px;
+        }
+
+
+        th {
+            text-align: left;
+
+            padding: 15px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #eef2ff,
+                    #f5f3ff
+                );
+
+            color: #3730a3;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        td {
+            padding: 15px;
+
+            border-bottom: 1px solid #e2e8f0;
+
+            font-size: 14px;
+
+            color: #475569;
+        }
+
+
+        tr:hover td {
+            background: #f8fafc;
+        }
+
+
+        /* =========================
+           RECOMMENDATIONS
+        ========================= */
+
+        .recommendation-text {
+            color: #64748b;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            margin-top: 50px;
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 950px) {
+
+            .metrics {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .rfm-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .segments {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .charts {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .filter-card {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .search-form {
+                width: 100%;
+            }
+
+            .search-input {
+                flex: 1;
+
+                width: 100%;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 25px 15px 50px;
+            }
+
+            .hero {
+                padding: 30px 24px;
+            }
+
+            .hero h1 {
+                font-size: 31px;
+            }
+
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .segments {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-input {
+                min-width: 0;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="hero">
+
+        <h1>
+            Customer Intelligence Platform
+        </h1>
+
+        <p>
+            RFM analysis and machine-learning powered customer segmentation
+        </p>
+
+        <div class="hero-badge">
+            RFM Analysis • K-Means Clustering • Customer Analytics
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FILTER
+    ========================= -->
+
+    <div class="search-section filter-card">
+
+        <div>
+
+            <p class="filter-title">
+                Filter Customer Segment
+            </p>
+
+            <p class="filter-description">
+                Explore customer behavior by segment.
+            </p>
+
+        </div>
+
+
+        <form
+            method="GET"
+            class="search-form"
+        >
+
+            <select
+                name="segment"
+                class="search-input"
+                aria-label="Filter customer segment"
+                onchange="this.form.submit()"
+            >
+
+                {% for segment in segments %}
+
+                    <option
+                        value="{{ segment }}"
+                        {% if segment == selected_segment %}selected{% endif %}
+                    >
+
+                        {{ segment }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================
+         CURRENTLY VIEWING
+    ========================= -->
+
+    <div class="selected-section">
+
+        <p>
+
+            Currently viewing:
+
+            <strong>
+                {{ selected_segment }}
+            </strong>
+
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         KPI METRICS
+    ========================= -->
+
+    <h2>
+        Business Overview
+    </h2>
+
+
+    <div class="metrics">
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Total Customers
+            </div>
+
+            <div class="card-value">
+                {{ total_customers }}
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Total Revenue
+            </div>
+
+            <div class="card-value">
+                ₹{{ "{:,.0f}".format(total_revenue) }}
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Average Customer Spend
+            </div>
+
+            <div class="card-value">
+                ₹{{ "{:,.0f}".format(average_customer_spend) }}
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Customer Segments
+            </div>
+
+            <div class="card-value">
+                {{ total_segments }}
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         RFM SUMMARY
+    ========================= -->
+
+    <h2>
+        RFM Summary
+    </h2>
+
+
+    <div class="rfm-cards">
+
+
+        <div class="rfm-card">
+
+            <div class="rfm-title">
+                Recency
+            </div>
+
+            <div class="rfm-value">
+                {{ "{:,.1f}".format(average_recency) }} days
+            </div>
+
+            <div class="rfm-description">
+                Average time since the customer's last purchase.
+            </div>
+
+        </div>
+
+
+        <div class="rfm-card">
+
+            <div class="rfm-title">
+                Frequency
+            </div>
+
+            <div class="rfm-value">
+                {{ "{:,.1f}".format(average_frequency) }}
+            </div>
+
+            <div class="rfm-description">
+                Average number of orders per customer.
+            </div>
+
+        </div>
+
+
+        <div class="rfm-card">
+
+            <div class="rfm-title">
+                Monetary
+            </div>
+
+            <div class="rfm-value">
+                ₹{{ "{:,.0f}".format(average_monetary) }}
+            </div>
+
+            <div class="rfm-description">
+                Average amount spent per customer.
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         SEGMENTS
+    ========================= -->
+
+    <h2>
+        Customer Segments
+    </h2>
+
+
+    <div class="segments">
+
+
+        <div class="segment-card">
+
+            <h3>
+                🏆 Champions
+            </h3>
+
+            <div class="segment-count">
+                {{ segment_counts.get("Champions", 0) }}
+            </div>
+
+            <div class="segment-description">
+                High-value and highly engaged customers.
+            </div>
+
+        </div>
+
+
+        <div class="segment-card">
+
+            <h3>
+                💜 Loyal Customers
+            </h3>
+
+            <div class="segment-count">
+                {{ segment_counts.get("Loyal Customers", 0) }}
+            </div>
+
+            <div class="segment-description">
+                Customers with consistent purchasing behavior.
+            </div>
+
+        </div>
+
+
+        <div class="segment-card">
+
+            <h3>
+                ⚠️ At Risk
+            </h3>
+
+            <div class="segment-count">
+                {{ segment_counts.get("At Risk", 0) }}
+            </div>
+
+            <div class="segment-description">
+                Customers who may need re-engagement.
+            </div>
+
+        </div>
+
+
+        <div class="segment-card">
+
+            <h3>
+                🌱 New Customers
+            </h3>
+
+            <div class="segment-count">
+                {{ segment_counts.get("New Customers", 0) }}
+            </div>
+
+            <div class="segment-description">
+                Recently acquired customers with potential for repeat purchases.
+            </div>
+
+        </div>
+
+
+        <div class="segment-card">
+
+            <h3>
+                💎 High-Value Occasional
+            </h3>
+
+            <div class="segment-count">
+                {{ segment_counts.get("High-Value Occasional", 0) }}
+            </div>
+
+            <div class="segment-description">
+                High-spending customers with infrequent purchases.
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         CHARTS
+    ========================= -->
+
+    <h2>
+        Customer Analytics
+    </h2>
+
+
+    <div class="charts">
+
+
+        <div class="chart-card">
+
+            <h3>
+                Customer Segment Distribution
+            </h3>
+
+            <div class="chart-container">
+
+                <canvas id="segmentChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <div class="chart-card">
+
+            <h3>
+                Revenue by Customer Segment
+            </h3>
+
+            <div class="chart-container">
+
+                <canvas id="revenueChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         CUSTOMER SEARCH
+    ========================= -->
+
+    <h2>
+        Customer Search
+    </h2>
+
+
+    <div class="search-section">
+
+        <p>
+            Search for an individual customer using their Customer ID.
+        </p>
+
+
+        <form
+            method="POST"
+            class="search-form"
+        >
+
+            <input
+                type="number"
+                name="customer_id"
+                class="search-input"
+                placeholder="Enter Customer ID"
+                required
+            >
+
+            <button
+                type="submit"
+                class="search-button"
+            >
+                Search Customer
+            </button>
+
+        </form>
+
+
+        {% if customer %}
+
+
+        <div class="profile">
+
+            <h3>
+                Customer #{{ customer["CustomerID"] }}
+            </h3>
+
+
+            <div class="profile-grid">
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Customer Segment
+                    </div>
+
+                    <div class="profile-value">
+                        {{ customer["segment"] }}
+                    </div>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Total Spend
+                    </div>
+
+                    <div class="profile-value">
+                        ₹{{ "{:,.2f}".format(customer["total_spend"]) }}
+                    </div>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Number of Orders
+                    </div>
+
+                    <div class="profile-value">
+                        {{ customer["number_of_orders"] }}
+                    </div>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Average Order Value
+                    </div>
+
+                    <div class="profile-value">
+                        ₹{{ "{:,.2f}".format(customer["average_order_value"]) }}
+                    </div>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Recency
+                    </div>
+
+                    <div class="profile-value">
+                        {{ customer["recency_days"] }} days
+                    </div>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Unique Products
+                    </div>
+
+                    <div class="profile-value">
+                        {{ customer["unique_products"] }}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- =========================
+         CUSTOMER TABLE
+    ========================= -->
+
+    <h2>
+        Customer Details
+    </h2>
+
+
+    <div class="table-section">
+
+        <p>
+            Showing the highest-spending customers in the selected segment.
+        </p>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Customer ID
+                        </th>
+
+                        <th>
+                            Segment
+                        </th>
+
+                        <th>
+                            Total Spend
+                        </th>
+
+                        <th>
+                            Orders
+                        </th>
+
+                        <th>
+                            Average Order
+                        </th>
+
+                        <th>
+                            Recency
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for row in customer_table %}
+
+                    <tr>
+
+                        <td>
+                            {{ row["CustomerID"] }}
+                        </td>
+
+                        <td>
+                            {{ row["segment"] }}
+                        </td>
+
+                        <td>
+                            ₹{{ "{:,.2f}".format(row["total_spend"]) }}
+                        </td>
+
+                        <td>
+                            {{ row["number_of_orders"] }}
+                        </td>
+
+                        <td>
+                            ₹{{ "{:,.2f}".format(row["average_order_value"]) }}
+                        </td>
+
+                        <td>
+                            {{ row["recency_days"] }} days
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         RECOMMENDED ACTIONS
+    ========================= -->
+
+    <h2>
+        Recommended Actions
+    </h2>
+
+
+    <div class="segments">
+
+
+        <div class="segment-card">
+
+            <h3>
+                🏆 Champions
+            </h3>
+
+            <div class="recommendation-text">
+                Reward high-value customers with exclusive offers,
+                early access, loyalty rewards, and personalized experiences.
+            </div>
+
+        </div>
+
+
+        <div class="segment-card">
+
+            <h3>
+                💜 Loyal Customers
+            </h3>
+
+            <div class="recommendation-text">
+                Encourage larger purchases through upselling,
+                cross-selling, bundles, and loyalty programs.
+            </div>
+
+        </div>
+
+
+        <div class="segment-card">
+
+            <h3>
+                ⚠️ At Risk
+            </h3>
+
+            <div class="recommendation-text">
+                Run targeted re-engagement campaigns and personalized
+                offers to bring inactive customers back.
+            </div>
+
+        </div>
+
+
+        <div class="segment-card">
+
+            <h3>
+                🌱 New Customers
+            </h3>
+
+            <div class="recommendation-text">
+                Convert first purchases into repeat purchases through
+                welcome offers and follow-up campaigns.
+            </div>
+
+        </div>
+
+
+        <div class="segment-card">
+
+            <h3>
+                💎 High-Value Occasional
+            </h3>
+
+            <div class="recommendation-text">
+                Increase purchase frequency using personalized
+                recommendations, reminders, and exclusive offers.
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer">
+
+        Customer Intelligence Platform • RFM Analytics • K-Means Segmentation
+        <br>
+        Built by <strong>Sujata Kradiya</strong>
+    
+    </div>
+
+<script id="dashboard-data" type="application/json">
+{{ {"segment_counts": segment_counts, "segment_revenue": segment_revenue} | tojson }}
+</script>
+
+<script>
+
+    /* =========================
+       DASHBOARD DATA
+       Jinja renders the JSON above; JavaScript reads it safely.
+    ========================= */
+
+    const dashboardData = JSON.parse(
+        document.getElementById("dashboard-data").textContent
+    );
+
+    const segmentData = dashboardData.segment_counts || {};
+    const segmentLabels = Object.keys(segmentData);
+    const segmentValues = Object.values(segmentData);
+
+    const revenueData = dashboardData.segment_revenue || {};
+    const revenueLabels = Object.keys(revenueData);
+    const revenueValues = Object.values(revenueData);
+
+
+    /* =========================
+       SEGMENT CHART
+    ========================= */
+
+    new Chart(
+
+        document.getElementById("segmentChart"),
+
+        {
+
+            type: "bar",
+
+            data: {
+
+                labels: segmentLabels,
+
+                datasets: [{
+
+                    label: "Number of Customers",
+
+                    data: segmentValues,
+
+                    backgroundColor: [
+                        "#6366f1",
+                        "#8b5cf6",
+                        "#ef4444",
+                        "#06b6d4",
+                        "#10b981"
+                    ],
+
+                    borderRadius: 8
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+                        beginAtZero: true,
+
+                        grid: {
+                            color: "#e2e8f0"
+                        }
+                    },
+
+                    x: {
+
+                        grid: {
+                            display: false
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    );
+
+
+    /* =========================
+       REVENUE CHART
+    ========================= */
+
+    new Chart(
+
+        document.getElementById("revenueChart"),
+
+        {
+
+            type: "bar",
+
+            data: {
+
+                labels: revenueLabels,
+
+                datasets: [{
+
+                    label: "Revenue",
+
+                    data: revenueValues,
+
+                    backgroundColor: [
+                        "#06b6d4",
+                        "#8b5cf6",
+                        "#f59e0b",
+                        "#10b981",
+                        "#6366f1"
+                    ],
+
+                    borderRadius: 8
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        grid: {
+                            color: "#e2e8f0"
+                        }
+
+                    },
+
+                    x: {
+
+                        grid: {
+                            display: false
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    );
+
+
+</script>
+
+
+</body>
+
+</html>
