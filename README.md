@@ -1,82 +1,121 @@
 # Customer Intelligence Platform
 
-A customer analytics dashboard that uses RFM analysis and K-Means clustering to segment customers based on their purchasing behavior.
+A customer analytics platform that uses RFM analysis and K-Means clustering to segment customers based on purchasing behavior and generate business insights.
 
-## Overview
-
-The Customer Intelligence Platform analyzes customer transaction data and groups customers into meaningful segments.
-
-The goal is to help businesses understand:
-
-- Which customers are highly valuable
-- Which customers are loyal
-- Which customers may be at risk of leaving
-- Which customers are newly acquired
-- Which high-value customers purchase occasionally
-
-The project combines data analysis, machine learning, and a Flask-based web dashboard to turn customer data into actionable insights.
-
-## Key Features
-
+## Features
+- Data cleaning and preprocessing
 - RFM (Recency, Frequency, Monetary) analysis
+- Customer-level feature engineering
 - K-Means customer segmentation
-- Interactive customer segment filtering
-- Revenue and customer distribution charts
-- RFM summary metrics
-- Individual customer search
-- Customer-level analytics
-- Segment-based business recommendations
-- Responsive dashboard interface
+- Segment and revenue analysis
+- Interactive Flask dashboard
+- Customer behavior visualization
 
-## Customer Segments
-
-The platform categorizes customers into five groups:
-
-- **Champions** — High-value and highly engaged customers
-- **Loyal Customers** — Customers with consistent purchasing behavior
-- **At Risk** — Customers who may need re-engagement
-- **New Customers** — Recently acquired customers
-- **High-Value Occasional** — High-spending customers who purchase less frequently
-
-## RFM Analysis
-
-RFM analysis evaluates customers using three factors:
-
-- **Recency** — How recently a customer made a purchase
-- **Frequency** — How frequently a customer places orders
-- **Monetary** — How much a customer spends
-
-These features are used to understand customer behavior and create meaningful customer segments.
-
-## Machine Learning
-
-The project uses **K-Means Clustering** to group customers with similar purchasing behavior.
-
-## Technology Stack
-
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- Flask
-- HTML
-- CSS
-- JavaScript
-- Chart.js
+## Tech Stack
+Python, Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn, Flask, HTML, CSS, JavaScript, Jupyter Notebook, Git & GitHub
 
 ## Project Structure
+Customer_Intelligence_Platform/
+- app/app.py
+- app/templates/index.html
+- data/Online Retail.xlsx
+- data/customer_features.csv
+- data/customer_segments.csv
+- models/customer_segmentation.py
+- notebooks/01_data_exploration.ipynb
+- requirements.txt
+- README.md
 
-```text
-customer-intelligence-platform/
-│
-├── app/
-│   ├── app.py
-│   └── templates/
-│       └── index.html
-│
-├── data/
-│   └── customer_segments.csv
-│
-├── requirements.txt
-├── README.md
-└── .gitignore
+## Dataset
+The project uses an Online Retail transaction dataset containing customer purchase information such as Customer ID, Invoice, Invoice Date, Quantity, Unit Price, Product information, and Country. The transaction data is transformed into customer-level analytical data.
+
+## RFM Analysis
+RFM analysis evaluates customers using three metrics:
+
+- Recency: How recently a customer made a purchase.
+- Frequency: How often a customer makes purchases.
+- Monetary: How much a customer has spent.
+
+These metrics are combined to create a customer-level profile.
+
+## Customer Segmentation
+The RFM features are scaled and used with the K-Means clustering algorithm to group customers with similar purchasing behavior.
+
+Workflow:
+
+Raw Data → Data Cleaning → Customer Features → RFM Analysis → Feature Scaling → K-Means → Customer Segments → Dashboard → Business Insights
+
+## Dashboard
+The Flask dashboard displays customer analytics including customer statistics, segment distribution, revenue by segment, RFM information, and visualizations.
+
+## Business Insights
+The segmentation can help identify high-value customers, frequent customers, recent customers, low-engagement customers, and customers who may require retention strategies. These insights can support targeted marketing and customer relationship management.
+
+## Installation
+
+Clone the repository:
+
+git clone https://github.com/sujat1234/Customer_Intelligence_Platform.git
+
+Open the project:
+
+cd Customer_Intelligence_Platform
+
+Create a virtual environment:
+
+python3 -m venv venv
+
+Activate it on macOS/Linux:
+
+source venv/bin/activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+## Run the Application
+
+Go to the app directory:
+
+cd app
+
+Run:
+
+python app.py
+
+Open the local Flask URL shown in the terminal in your browser.
+
+## Run the Notebook
+
+From the project root:
+
+jupyter notebook
+
+Open:
+
+notebooks/01_data_exploration.ipynb
+
+## Machine Learning Workflow
+
+1. Load the retail dataset.
+2. Clean and preprocess transaction data.
+3. Create customer-level features.
+4. Calculate Recency, Frequency, and Monetary values.
+5. Scale the RFM features.
+6. Apply K-Means clustering.
+7. Assign customers to segments.
+8. Analyze and visualize the resulting segments.
+
+## Future Improvements
+- Customer churn prediction
+- Customer lifetime value prediction
+- Interactive dashboard filters
+- Cloud deployment
+- Real-time analytics
+- Personalized customer recommendations
+
+## Author
+
+Sujata Kradiya
+
+GitHub: https://github.com/sujat1234
