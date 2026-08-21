@@ -94,6 +94,22 @@ jupyter notebook
 Open:
 
 notebooks/01_data_exploration.ipynb
+## Project Screenshots
+
+### Dashboard
+![Customer Intelligence Dashboard](Screenshots/dashboard.png)
+
+### Customer Segmentation
+![Customer Segmentation](Screenshots/customer_segment.png)
+
+### Analytics
+![Analytics](Screenshots/analytics.png)
+
+### Customer Search
+![Customer Search](Screenshots/customer-search.png)
+
+### Top Customers
+![Top Customers](Screenshots/top_customer.png)
 
 ## Machine Learning Workflow
 
