@@ -106,8 +106,7 @@ notebooks/01_data_exploration.ipynb
 ![Analytics](Screenshots/analytics.png)
 
 ### Customer Search
-![Customer Search](https://raw.githubusercontent.com/sujat1234/Customer_Intelligence_Platform/main/Screenshots/customer_search.png)
-
+![Customer Search](./Screenshots/customer_search.png)
 
 ### Top Customers
 ![Top Customers](Screenshots/top_customer.png)
