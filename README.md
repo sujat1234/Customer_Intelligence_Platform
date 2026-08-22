@@ -105,8 +105,7 @@ notebooks/01_data_exploration.ipynb
 ### Analytics
 ![Analytics](Screenshots/analytics.png)
 
-### Customer Search
-![Customer Search](./Screenshots/customer_search.png)
+
 
 ### Top Customers
 ![Top Customers](Screenshots/top_customer.png)
